@@ -35,6 +35,10 @@ spec:
             limits:
               memory: "2Gi"
               cpu: "1000m"
+          tolerations:
+            - key: "node-role.kubernetes.io/control-plane"
+              effect: "NoSchedule"
+              operator: "Exists"
       volumes:
         - name: config-volume
           persistentVolumeClaim:
