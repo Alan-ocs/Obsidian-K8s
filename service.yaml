@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: obsidian-service
+spec:
+  selector:
+    app: obsidian
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  - protocol: TCP
+    port: 3001
+    targetPort: 3001
+  type: LoadBalancer
