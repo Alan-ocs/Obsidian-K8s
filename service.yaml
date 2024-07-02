@@ -6,10 +6,11 @@ spec:
   selector:
     app: obsidian
   ports:
-  - protocol: TCP
-    port: 3000
-    targetPort: 3000
-  - protocol: TCP
-    port: 3001
-    targetPort: 3001
-  type: LoadBalancer
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 3001
