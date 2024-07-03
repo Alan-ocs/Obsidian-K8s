@@ -13,38 +13,58 @@ spec:
         app: obsidian
     spec:
       containers:
-        - name: obsidian
-          image: lscr.io/linuxserver/obsidian:latest
-          ports:
-            - containerPort: 3000
-            - containerPort: 3001
-          env:
-            - name: PUID
-              value: "1000"
-            - name: PGID
-              value: "1000"
-            - name: TZ
-              value: "America/Sao_Paulo"
-          volumeMounts:
-            - name: config-volume
-              mountPath: /config
-          resources:
-            requests:
-              memory: "1Gi"
-              cpu: "500m"
-            limits:
-              memory: "2Gi"
-              cpu: "1000m"
-          tolerations:
-            - key: "node-role.kubernetes.io/control-plane"
-              effect: "NoSchedule"
-              operator: "Exists"
-      volumes:
+      - name: obsidian
+        image: lscr.io/linuxserver/obsidian:latest
+        ports:
+        - containerPort: 3000
+        - containerPort: 3001
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: "America/Sao_Paulo"
+        volumeMounts:
         - name: config-volume
-          persistentVolumeClaim:
-            claimName: obsidian-config-pvc
-      securityContext:
-        capabilities:
-          add:
-            - SYS_ADMIN
-        privileged: true
+          mountPath: /config
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+            httpHeaders:
+            - name: Accept
+              value: "application/json"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+            httpHeaders:
+            - name: Accept
+              value: "application/json"
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        securityContext:
+          capabilities:
+            add:
+            - CHOWN
+          # Not recommended to run containers with full privileges
+          # privileged: false (default)
+      volumes:
+      - name: config-volume
+        hostPath:
+          path: /
+          type: Directory
