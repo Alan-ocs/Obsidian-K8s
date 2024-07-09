@@ -28,43 +28,15 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: /config
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
-            httpHeaders:
-            - name: Accept
-              value: "application/json"
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          successThreshold: 1
-          failureThreshold: 3
-        readinessProbe:
-          httpGet:
-            path: /readyz
-            port: 8081
-            httpHeaders:
-            - name: Accept
-              value: "application/json"
-          initialDelaySeconds: 15
-          periodSeconds: 10
-          successThreshold: 1
-          failureThreshold: 3
         resources:
           requests:
             memory: "1Gi"
-            cpu: "500m"
-          limits:
-            memory: "2Gi"
-            cpu: "1000m"
         securityContext:
           capabilities:
-            add:
-            - CHOWN
-          # Not recommended to run containers with full privileges
-          # privileged: false (default)
+            add: ["SYS_ADMIN"]
+          privileged: true
       volumes:
       - name: config-volume
-        hostPath:
-          path: /
-          type: Directory
+        persistentVolumeClaim:
+          claimName: obsidian-pvc
+      restartPolicy: Always
