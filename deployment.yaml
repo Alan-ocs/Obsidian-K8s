@@ -31,10 +31,6 @@ spec:
         resources:
           requests:
             memory: "1Gi"
-        securityContext:
-          capabilities:
-            add: ["SYS_ADMIN"]
-          privileged: true
       volumes:
       - name: config-volume
         persistentVolumeClaim:
