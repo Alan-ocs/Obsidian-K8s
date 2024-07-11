@@ -1,6 +1,6 @@
 # Obsidian Deployment on Kubernetes
 
-This documentation provides a guide to deploying the Obsidian on a Kubernetes cluster using Talos and MetalLB, managed via ArgoCD. Each component of the deployment is explained in detail to ensure a clear understanding of the process and its purpose.
+This documentation provides a guide to deploying the Obsidian on a Kubernetes cluster using Talos and MetalLB, managed via ArgoCD. Each deployment component is explained in detail to ensure a clear understanding of the process and its purpose.
 
 ## Table of Contents
 
@@ -23,8 +23,8 @@ This project deploys the Obsidian on a Kubernetes cluster, utilizing Talos for K
 
 Before proceeding, ensure you have the following:
 
-1. **Kubernetes Cluster**: A running Kubernetes cluster, I deployed it on Talos.
-2. **MetalLB**: MetalLB configured to handle LoadBalancer services.
+1. **Kubernetes Cluster**: A running Kubernetes cluster, deployed on Talos.
+2. **MetalLB**: MetalLB is configured to handle LoadBalancer services.
 3. **ArgoCD**: Installed and configured ArgoCD for GitOps deployment.
 4. **kubectl & talosctl**: Command-line tool configured to interact with your Kubernetes cluster.
 5. **Persistent Storage**: Available storage on the Kubernetes nodes at `/var/mnt/data`.
@@ -112,3 +112,7 @@ To access the Obsidian service:
 2. **Access the Application**:
 
    Open your browser and navigate to `http://<external-ip>:3000` to access the Obsidian service.
+
+## Known Issue: Graph View Crashing
+
+There is a known issue with the Graph View in Obsidian where the screen turns black upon opening the Graph View. This problem is related to the X11 server configuration inside the container.
