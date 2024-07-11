@@ -14,7 +14,7 @@ This documentation provides a guide to deploying the Obsidian on a Kubernetes cl
 5. [Accessing the Application](#accessing-the-application)
 6. [Troubleshooting](#troubleshooting)
 7. [Conclusion](#conclusion)
-8. [Known Issue: Graph View Crashing](#Known-Issue:-Graph-View-Crashing)
+8. [Known Issue](#Known-Issue)
 
 ## Overview
 
