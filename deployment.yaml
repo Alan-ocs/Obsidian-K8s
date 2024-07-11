@@ -39,8 +39,7 @@ spec:
             memory: "1Gi"
       volumes:
       - name: x11-unix
-        hostPath:
-          path: /tmp/.X11-unix
+        emptyDir: {}
       - name: config-volume
         persistentVolumeClaim:
           claimName: obsidian-pvc
