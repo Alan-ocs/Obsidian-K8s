@@ -25,13 +25,22 @@ spec:
           value: "1000"
         - name: TZ
           value: "America/Sao_Paulo"
+        - name: DISPLAY
+          value: ":0"
+        - name: XDG_RUNTIME_DIR
+          value: "/tmp"
         volumeMounts:
         - name: config-volume
           mountPath: /config
+        - name: x11-unix
+          mountPath: /tmp/.X11-unix
         resources:
           requests:
             memory: "1Gi"
       volumes:
+      - name: x11-unix
+        hostPath:
+          path: /tmp/.X11-unix
       - name: config-volume
         persistentVolumeClaim:
           claimName: obsidian-pvc
